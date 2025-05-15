@@ -19,18 +19,18 @@ const Landing = () => {
         className="landing__hero"
         >
         <div className="landing__hero-content">
-  <h1 className="landing__title">Courses</h1>
-  <p className="landing__description">
-    This is the list of the courses you can enroll in.
-    <br />
-    Courses when you need them and want them.
-  </p>
-  <div className="landing__cta">
-    <Link href="/search">
-      <div className="landing__cta-button">Search for Courses</div>
-    </Link>
-  </div>
-</div>
+        <h1 className="landing__title">Courses</h1>
+        <p className="landing__description">
+            This is the list of the courses you can enroll in.
+            <br />
+            Courses when you need them and want them.
+        </p>
+            <div className="landing__cta">
+                <Link href="/search">
+                <div className="landing__cta-button">Search for Courses</div>
+                </Link>
+            </div>
+        </div>
 
         </motion.div>
     </motion.div>
