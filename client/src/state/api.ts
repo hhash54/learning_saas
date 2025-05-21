@@ -1,15 +1,33 @@
-import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { BaseQueryApi, FetchArgs } from "@reduxjs/toolkit/query";
 
 
 const customBaseQuery = async (
   args: string | FetchArgs,
   api: BaseQueryApi,
-  extraOptions: {}
+  extraOptions: any
 ) => {
-  const baseQuery =fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL })
+  const baseQuery = fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+  });
+
+  try {
+    const result: any = await baseQuery(args, api, extraOptions);
+    if (result.data) {
+      result.data = result.data.data;
+    }
+    return result;
+  } catch (error: unknown) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+
+    return { error: { status: "FETCH_ERROR", error: errorMessage } };
+  }
+};
+
 
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
+  baseQuery: customBaseQuery,
   reducerPath: "api",
   tagTypes: ["Courses"],
   endpoints: (build) => ({

@@ -111,7 +111,20 @@ const Landing = () => {
             ))}
             </div>
             <div className="landing__courses">
-                {/* COURSES  DISPLAY*/}
+                  {courses &&
+                    courses.slice(0, 4).map((course, index) => (
+                      <motion.div
+                        key={course.courseId}
+                        initial={{ y: 50, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: index*0.2 }}
+                        viewport={{ amount: 0.3 }}
+                      >
+                        <CourseCardSearch course={course}/>
+                      </motion.div>
+                    ))
+                  }
+
 
             </div>
 
