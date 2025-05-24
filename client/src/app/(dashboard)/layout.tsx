@@ -1,8 +1,12 @@
-import Loading from "a/components/Loading";
-import Navbar from "a/components/Navbar";
+"use client"
+import Loading from "@/components/Loading";
+
+import Navbar from "@/components/Navbar";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -14,11 +18,22 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!isLoaded) return <Loading />;
   if (!user) return <div>Please sign in to access this page.</div>;
 
-  return (
-    <div className="nondashboard-layout">
-      <main className="nondashboard-layout__main">
-        {children}
-      </main>
+return (
+<SidebarProvider>
+  <div className="dashboard">
+    {/* sidebar will go here */}
+    <div className="dashboard__content">
+      {/* chapter sidebar will go */}
+      <div
+        className={cn("dashboard__main")}
+        style={{ height: "100vh" }}
+      >
+        <main className="dashboard__body">
+          {children}
+        </main>
+      </div>
     </div>
-  );
+  </div>
+</SidebarProvider>
+);
 }
