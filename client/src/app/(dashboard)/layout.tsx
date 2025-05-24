@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/AppSidebar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -21,7 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 return (
 <SidebarProvider>
   <div className="dashboard">
-    {/* sidebar will go here */}
+    <AppSidebar/>
     <div className="dashboard__content">
       {/* chapter sidebar will go */}
       <div
