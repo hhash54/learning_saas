@@ -29,6 +29,7 @@ return (
         className={cn("dashboard__main")}
         style={{ height: "100vh" }}
       >
+        
         <main className="dashboard__body">
           {children}
         </main>
