@@ -46,6 +46,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const dynamoose = __importStar(require("dynamoose"));
 const express_2 = require("@clerk/express");
 const courseRoutes_1 = __importDefault(require("./routes/courseRoutes")); /* ROUTE IMPORTS */
+const userClerkRoutes_1 = __importDefault(require("./routes/userClerkRoutes"));
 /* CONFIGURATIONS */
 dotenv_1.default.config();
 const isProduction = process.env.NODE_ENV === "production";
@@ -68,6 +69,7 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 });
 app.use("/courses", courseRoutes_1.default);
+app.use("/users/clerk", userClerkRoutes_1.default);
 /* SERVER */
 const port = process.env.PORT || 3000;
 if (!isProduction) {

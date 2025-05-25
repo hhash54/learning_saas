@@ -29,8 +29,17 @@ const customBaseQuery = async (
 export const api = createApi({
   baseQuery: customBaseQuery,
   reducerPath: "api",
-  tagTypes: ["Courses"],
+  tagTypes: ["Courses","Users"],
   endpoints: (build) => ({
+    updateUser: build.mutation<User, Partial<User> & { userId: string }>({
+  query: ({ userId, ...updatedUser }) => ({
+    url: `users/clerk/${userId}`,
+    method: "PUT",
+    body: updatedUser
+  }),
+  invalidatesTags: ["Users"]
+}),
+
     getCourses: build.query<Course[], { category?: string }>({
       query: ({ category }) => ({
         url: "courses",
@@ -45,4 +54,4 @@ export const api = createApi({
   }),
 });
 
-export const {useGetCoursesQuery, useGetCourseQuery} = api;
+export const {useUpdateUserMutation,useGetCoursesQuery, useGetCourseQuery} = api;
