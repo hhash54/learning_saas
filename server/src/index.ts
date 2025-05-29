@@ -8,6 +8,8 @@ import * as dynamoose from "dynamoose";
 import {clerkMiddleware, createClerkClient, requireAuth} from "@clerk/express";
 import courseRoutes from "./routes/courseRoutes"/* ROUTE IMPORTS */
 import userClerkRoutes from "./routes/userClerkRoutes";
+import transactionRoutes from "./routes/transactionRoutes";
+
 /* CONFIGURATIONS */
 dotenv.config();
 
@@ -29,12 +31,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(clerkMiddleware())
 
+
 /* ROUTES */
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 app.use("/courses",courseRoutes)
 app.use("/users/clerk", requireAuth(), userClerkRoutes);
+app.use("/transactions", requireAuth(), transactionRoutes);
+
 /* SERVER */
 const port = process.env.PORT || 3000;
 if (!isProduction) {

@@ -38,14 +38,14 @@ if (isMutationRequest) {
 }
 
 
-if (result.data) {
-  result.data = result.data.data;
-} else if (
-  result.error?.status === 204 ||
-  result.meta?.response?.status === 24
-) {
-  return { data: null };
-}
+    if (result.data) {
+      result.data = result.data.data;
+    } else if (
+      result.error?.status === 204 ||
+      result.meta?.response?.status === 24
+    ) {
+      return { data: null };
+    }
 
     return result;
   } catch (error: unknown) {
@@ -81,6 +81,16 @@ export const api = createApi({
     getCourse: build.query<Course, string>({
       query: (id) => `courses/${id}`,
       providesTags: (result, error, id) => [{ type: "Courses", id }],
+    }),
+    createStripePaymentIntent: build.mutation<
+      { clientSecret: string },
+      { amount: number }
+    >({
+      query: ({ amount }) => ({
+        url: `/transactions/stripe/payment-intent`,
+        method: "POST",
+        body: { amount },
+      }),
     }),
   }),
 });
