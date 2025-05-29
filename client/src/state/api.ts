@@ -95,4 +95,4 @@ export const api = createApi({
   }),
 });
 
-export const {useUpdateUserMutation,useGetCoursesQuery, useGetCourseQuery} = api;
+export const {useUpdateUserMutation,useGetCoursesQuery, useGetCourseQuery, useCreateStripePaymentIntentMutation} = api;
