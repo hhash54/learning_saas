@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCourse = exports.listCourses = void 0;
 const courseModel_1 = __importDefault(require("../models/courseModel"));
+const uuid_1 = require("uuid");
 const listCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { category } = req.query;
     try {
@@ -35,6 +36,34 @@ const getCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             res.status(404).json({ message: "Course not found" });
             return;
         }
+        export const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+            try {
+                const { teacherId, teacherName } = req.body;
+                if (!teacherId || !teacherName) {
+                    res.status(400).json({ message: "Teacher Id and name are required" });
+                    return;
+                }
+                const newCourse = new courseModel_1.default({
+                    courseId: (0, uuid_1.v4)(),
+                    teacherId,
+                    teacherName,
+                    title: "Untitled Course",
+                    description: "",
+                    category: "Uncategorized",
+                    image: "",
+                    price: 0,
+                    level: "Beginner",
+                    status: "Draft",
+                    sections: [],
+                    enrollments: [],
+                });
+                yield newCourse.save();
+                res.json({ message: "Course created successfully", data: newCourse });
+            }
+            catch (error) {
+                res.status(500).json({ message: "Error creating course", error });
+            }
+        });
         res.json({ message: "Courses retrieved successfully", data: course });
     }
     catch (error) {
