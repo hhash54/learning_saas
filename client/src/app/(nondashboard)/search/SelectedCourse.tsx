@@ -9,7 +9,7 @@ const SelectedCourse = ({ course, handleEnrollNow }: SelectedCourseProps) => {
       <div>
         <h3 className="selected-course__title">{course.title}</h3>
         <p className="selected-course__author">
-          By {course.teacherName}{" "}
+          By {course.teacherName} |{" "}
           <span className="selected-course__enrollment-count">
             {course?.enrollments?.length}
           </span>
@@ -25,17 +25,16 @@ const SelectedCourse = ({ course, handleEnrollNow }: SelectedCourseProps) => {
         </div>
 
         <div className="selected-course__footer">
-        <span className="selected-course__price">
+          <span className="selected-course__price">
             {formatPrice(course.price)}
-        </span>
-        <Button
+          </span>
+          <Button
             onClick={() => handleEnrollNow(course.courseId)}
             className="bg-primary-700 hover:bg-primary-600"
-        >
+          >
             Enroll Now
-        </Button>
+          </Button>
         </div>
-
       </div>
     </div>
   );

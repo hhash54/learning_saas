@@ -7,9 +7,9 @@ export default function Home() {
     <div className="nondashboard-layout">
       <NonDashboardNavbar />
       <main className="nondashboard-layout__main">
-        <Landing/>
+        <Landing />
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

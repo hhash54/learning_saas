@@ -1,7 +1,8 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+
 interface UseCarouselProps {
   totalImages: number;
-  interval?: number; // optional
+  interval?: number;
 }
 
 export const useCarousel = ({
