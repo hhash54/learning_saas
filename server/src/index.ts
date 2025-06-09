@@ -12,7 +12,6 @@ import {
   createClerkClient,
   requireAuth,
 } from "@clerk/express";
-
 /* ROUTE IMPORTS */
 import courseRoutes from "./routes/courseRoutes";
 import userClerkRoutes from "./routes/userClerkRoutes";
@@ -31,26 +30,13 @@ export const clerkClient = createClerkClient({
 });
 
 const app = express();
-
-/* MIDDLEWARE */
 app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// ✅ CORS Configuration
-app.use(
-  cors({
-    origin: "*", // Optionally restrict to "https://learning-saas-tan.vercel.app"
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-app.options("*", cors()); // ✅ Preflight support
-
-// Clerk auth middleware
+app.use(cors());
 app.use(clerkMiddleware());
 
 /* ROUTES */
@@ -63,7 +49,7 @@ app.use("/users/clerk", requireAuth(), userClerkRoutes);
 app.use("/transactions", requireAuth(), transactionRoutes);
 app.use("/users/course-progress", requireAuth(), userCourseProgressRoutes);
 
-/* LOCAL DEV SERVER */
+/* SERVER */
 const port = process.env.PORT || 3000;
 if (!isProduction) {
   app.listen(port, () => {
@@ -71,7 +57,7 @@ if (!isProduction) {
   });
 }
 
-/* LAMBDA EXPORT */
+// aws production environment
 const serverlessApp = serverless(app);
 export const handler = async (event: any, context: any) => {
   if (event.action === "seed") {
